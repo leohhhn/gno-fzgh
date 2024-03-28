@@ -6,7 +6,7 @@ In this tutorial, we will enter the world of **Gno.Land**, and build our own
 smart contract using the **Gno** programming language. Gno is an interpreted
 version of Golang that shares 99% of the functionality with Go, allowing us
 to write blockchain-specific code in a secure, battle-tested language that many
-developers already have in their skill set.
+developers already have in their skillset.
 
 We will go over what Gno.Land is, and how you can use the full potential of Gno
 to build secure blockchain applications in a familiar blockchain language.
