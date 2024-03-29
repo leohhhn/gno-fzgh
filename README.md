@@ -46,9 +46,8 @@ Make sure you have set up your environment correctly:
 - Make sure `$GOPATH` is well-defined, and `$GOPATH/bin` is added to your
   `$PATH` variable.
 
-To get started with development, we need to clone the full
-[Gno.Land repository](https://github.com/gnolang/gno):
-First, clone the monorepo:
+To get started with development, we need to clone the 
+[Gno monorepo](https://github.com/gnolang/gno):
 
 ```bash
 git clone git@github.com:gnolang/gno.git
@@ -56,8 +55,7 @@ git clone git@github.com:gnolang/gno.git
 
 Next, install all the necessary binaries:
 
-1. `gno` - binary for running & testing the Gno language, found in `gnovm/`.
-   Run
+1. `gno` - binary for running & testing the Gno language, found in `gnovm/`
 
 ```
 cd gnovm
