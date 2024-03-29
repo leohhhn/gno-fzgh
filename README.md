@@ -1,6 +1,6 @@
 # From Zero to Gno.Land Hero
 
-![RealmCode](whitelist/src/banner.png)
+![RealmCode](src/banner.png)
 
 In this tutorial, we will enter the world of **Gno.Land**, and build our own
 smart contract using the **Gno** programming language. Gno is an interpreted
@@ -14,7 +14,7 @@ to build secure blockchain applications in a familiar blockchain language.
 ## Why Gno.Land?
 
 Gno.Land is a layer 1 blockchain network based on Tendermint2 technology.
-It aims to offer security, scalability, and high-quality smart contract
+It aims to offesecurity, scalability, and high-quality smart contract
 libraries to developers while also being interconnected with existing Cosmos
 chains via IBC1. Gno.Land comes with GnoVM, a VM which allows us to
 run interpreted Gno code. Currently, Gno.Land has a development testnet out,
@@ -48,30 +48,36 @@ Make sure you have set up your environment correctly:
 
 To get started with development, we need to clone the full
 [Gno.Land repository](https://github.com/gnolang/gno):
+First, clone the monorepo:
 
-```
+```bash
 git clone git@github.com:gnolang/gno.git
 ```
 
-After going into the cloned repository, we can build and install the
-aforementioned tools with the following commands:
+Next, install all the necessary binaries:
+
+1. `gno` - binary for running & testing the Gno language, found in `gnovm/`.
+   Run
+
+```
+cd gnovm
+make build && make install
+```
+
+2. `gnoland` - binary containing the node which opens up an RPC API, found in
+   `gno.land/`
 
 ```
 cd gno.land
 make build && make install
 ```
 
-This will make all of the required tools available via CLI.
-
-The next step is building the GnoVM, which is required to compile and
-interpret Gno to Go.
-From the `gno.land` subfolder, run the following commands:
-
+3. `gnodev` - a tool to help you develop Gno apps faster
 ```
-cd ..
-cd gnovm
-make build && make install
+make install.gnodev
 ```
+
+> The `install.gnodev` command can be found in the root Makefile.
 
 This completes the environment setup.
 
@@ -723,7 +729,7 @@ If all went well, you've just written and uploaded your first Gno.Land
 package and realm. You can visit the realm path to see the `Render`
 function in action: `127.0.0.1:8888/r/demo/whitelist`. It should look something like this:
 
-![Default view](whitelist/src/defaultview.png)
+![Default view](src/defaultview.png)
 
 Finally, let's interact with our realm. Again, we are using `gnokey`,
 but this time around, instead of `addpkg`, we will use the `call` subcommand,
@@ -751,7 +757,7 @@ Unix seconds representation of a specific date and time.
 If the command was successful, we can see the state update on the realm
 through `gnoweb`.
 
-![Whitelist created view](whitelist/src/whitelistcreated.png)
+![Whitelist created view](src/whitelistcreated.png)
 
 Finally, we can try to sign up to the whitelist:
 
@@ -770,7 +776,7 @@ Dev
 We call the `SignUpToWhitelist` with the `whitelistID` argument being `0`.
 After the transaction goes through, we can see the state update:
 
-![User signup view](whitelist/src/signedup.png)
+![User signup view](src/signedup.png)
 
 Finally, if you'd wish to restart and wipe the node data, shut the gnoland
 node down, and run the following from within the `gno.land` folder:
@@ -797,7 +803,7 @@ interact with the Playground.
 Next, visit the [Playground](https://play.gno.land). You will be greeted with a
 simple `package.gno` file.
 
-![DefaultPlayground](whitelist/src/playground_default.png)
+![DefaultPlayground](src/playground_default.png)
 
 First we should test and deploy the `whitelist` package. To do this, delete `package.gno`,
 and create files like before: `whitelist.gno` & `whitelist_test.gno`. Then,
@@ -808,13 +814,13 @@ Gno Playground allows you to test, deploy, and share code in your browser.
 Clicking on "Test" will open a terminal and after a few seconds you should see
 the following output:
 
-![TestSuccess](whitelist/src/testsuccess.png)
+![TestSuccess](src/testsuccess.png)
 
 After we've verified our code works, we are ready to deploy the package code to
 the test3 testnet. Clicking on the "Deploy" button will prompt a wallet connection, and then
 you will see the following:
 
-![TestSuccess](whitelist/src/deploy.png)
+![TestSuccess](src/deploy.png)
 
 Change the deployment path as you see fit - for this we will go with
 `gno.land/p/leon/whitelist`. Keep in mind that this is the path you will use
@@ -832,7 +838,7 @@ After successfully deploying the package, we can continue with the realm code.
 Delete the old files, and create a new one - `whitelistfactory.gno`.
 Paste in the code, or simply find it on [this link](https://play.gno.land/p/M_ehuoP4jsM).
 
-![RealmCode](whitelist/src/realm_code.png)
+![RealmCode](src/realm_code.png)
 
 After inserting your package path, you can click deploy the realm to your chosen
 path. To view the realm on chain, visit `https://test3.<your_realm_path>`.
