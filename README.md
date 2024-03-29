@@ -815,21 +815,19 @@ the following output:
 ![TestSuccess](src/testsuccess.png)
 
 After we've verified our code works, we are ready to deploy the package code to
-the test3 testnet. Clicking on the "Deploy" button will prompt a wallet connection, and then
+the Portal loop testnet. Clicking on the "Deploy" button will prompt a wallet connection, and then
 you will see the following:
 
-![TestSuccess](src/deploy.png)
+![TestDeploy](src/deploy.png)
 
-Change the deployment path as you see fit - for this we will go with
-`gno.land/p/leon/whitelist`. Keep in mind that this is the path you will use
-to later import the package and use it for the `WhitelistFactory` realm.
+Change the deployment path as you see fit - for example,`gno.land/p/<your_name>/whitelist`.
+Keep in mind that this is the path you will use to later import the package 
+and use it for the `WhitelistFactory` realm.
 
-Choose `Testnet 3` for the network and click `Deploy`.
+Choose `Portal Loop` for the network and click `Deploy`.
 
 Gno Playground has a built-in faucet, which means that even if you do not have any
-test3 GNOTs, the deployment should result in a success, and you will be presented
-with a [Gnoscan link](https://gnoscan.io/transactions/details?txhash=pCBe5tZVD+5bvWE2vUJosxfwkSUSHJE9zbVahVs4vBA%3D)
-for the deployment transaction.
+testnet GNOTs, the deployment should result in a success.
 
 After successfully deploying the package, we can continue with the realm code.
 
