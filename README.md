@@ -210,7 +210,6 @@ type Whitelist struct {
 	maxUsers int            // Max number of users in whitelist
 	userList []std.Address  // Currently signed-up users
 }
-
 ```
 
 We will use the [standard library](https://docs.gno.land/concepts/standard-library/overview)
@@ -365,10 +364,11 @@ package whitelistfactory
 import (
 	"bytes"
 	"std"
+	"strconv"
 
 	"gno.land/p/demo/avl"
 	"gno.land/p/demo/ufmt"
-	"gno.land/p/demo/whitelist"
+	whitelist "gno.land/p/leon/test/test/whitelist" // Change to your deployed whitelist package path
 )
 
 // State variables
@@ -397,32 +397,28 @@ store all of our Whitelist instances.
 Moving on:
 
 ```
-func NewWhitelist(name string, deadline int, maxUsers int) (int, string) {
-
+func NewWhitelist(name string, deadline int, maxUsers int) string {
 	// Check if deadline is in the past
 	if deadline <= int(std.GetHeight()) {
-		return -1, "deadline cannot be in the past"
+		panic("deadline cannot be in the past")
 	}
 
 	// Get user who sent the transaction
 	txSender := std.GetOrigCaller()
 
 	// We will use the current size of the tree for the ID
-	id := whitelistTree.Size()
+	id := strconv.Itoa(whitelistTree.Size())
 
 	if maxUsers <= 0 {
-		return -1, "Maximum number of users cannot be less than 1"
+		panic("maximum number of users cannot be less than 1")
 	}
 
 	// Create new whitelist instance
 	w := whitelist.NewWhitelist(name, deadline, maxUsers, txSender)
 
 	// Update AVL tree with new state
-	success := whitelistTree.Set(strconv.Itoa(id), w)
-    if success {
-	    return id, "successfully created whitelist!"
-    }
-    return -1, "could not create new whitelist"
+	whitelistTree.Set(id, w)
+	return id
 }
 ```
 
@@ -450,7 +446,7 @@ in the AVL tree to its new state.
 func SignUpToWhitelist(whitelistID int) string {
 	// Get ID and convert to string
 	id := strconv.Itoa(whitelistID)
-	
+
 	// Get txSender
 	txSender := std.GetOrigCaller()
 
@@ -459,7 +455,7 @@ func SignUpToWhitelist(whitelistID int) string {
 	whiteListRaw, exists := whitelistTree.Get(id)
 
 	if !exists {
-		return "whitelist does not exist"
+		panic("whitelist does not exist")
 	}
 
 	// Cast raw Tree data into "Whitelist" type
@@ -469,28 +465,25 @@ func SignUpToWhitelist(whitelistID int) string {
 
 	// error handling
 	if w.IsOnWhitelist(txSender) {
-		return "user already in whitelist"
+		panic("user already in whitelist")
 	}
 
 	// If deadline has passed
 	if ddl <= int(std.GetHeight()) {
-		return "whitelist already closed"
+		panic("whitelist already closed")
 	}
 
 	// If whitelist is full
 	if w.GetMaxUsers() <= len(w.GetWhitelistedUsers()) {
-		return "whitelist full"
+		panic("whitelist full")
 	}
 
 	// Add txSender to user list
 	w.AddUserToList(txSender)
 
 	// Update the AVL tree with new state
-	success := whitelistTree.Set(id, w)
-	if success {
-	    return ufmt.Sprintf("successfully added user to whitelist %d", whitelistID)
-	}
-    return "failed to sign up"
+	whitelistTree.Set(id, w)
+	return "successfully signed up to " + id
 }
 ```
 
@@ -516,7 +509,6 @@ a `Buffer`, which we will finally convert into a string that will be displayed l
 
 ```
 func renderHomepage() string {
-
 	// Define empty buffer
 	var b bytes.Buffer
 
@@ -548,7 +540,7 @@ func renderHomepage() string {
 		if ddl > int(std.GetHeight()) {
 			b.WriteString(
 				ufmt.Sprintf(
-					"Whitelist sign-ups close at block %d\n",
+					"Whitelist sign-ups close at block %d\n\n",
 					w.GetWhitelistDeadline(),
 				),
 			)
@@ -805,7 +797,7 @@ simple `package.gno` file.
 
 First we should test and deploy the `whitelist` package. To do this, delete `package.gno`,
 and create files like before: `whitelist.gno` & `whitelist_test.gno`. Then,
-paste in the respective code, or just visit [this link](https://play.gno.land/p/t1AXy1wxafC)
+paste in the respective code, or just visit [this link](https://play.gno.land/p/yR0zHTvk0_6)
 with the pre-written code.
 
 Gno Playground allows you to test, deploy, and share code in your browser.
