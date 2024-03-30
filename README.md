@@ -824,17 +824,15 @@ testnet GNOTs, the deployment should result in a success.
 After successfully deploying the package, we can continue with the realm code.
 
 Delete the old files, and create a new one - `whitelistfactory.gno`.
-Paste in the code, or simply find it on [this link](https://play.gno.land/p/M_ehuoP4jsM).
+Paste in the code, or simply find it on [this link](https://play.gno.land/p/Qz9_5M03XRd).
 
 ![RealmCode](src/realm_code.png)
 
-After inserting your package path, you can click deploy the realm to your chosen
-path. To view the realm on chain, visit `https://test3.<your_realm_path>`.
+After you've confirmed the code, you can choose a path to deploy your realm to.
+When the realm has been deployed to the Portal loop testnet, you will be able
+to look it up simply by inputting the realm path in your browser. 
 
 This concludes our tutorial. Once again, congratulations on writing
 your first realm in Gno. You've become a real Gno.Land hero!
 
-If you'd like to see the full repository used for this tutorial,
-it can be found [here](https://github.com/leohhhn/gno/tree/from_zero_to_gnoland_hero).
-
-> Written _August 10th 2023_, last updated _March 10th 2024_
+> Written _August 10th 2023_, last updated _March 30th 2024_

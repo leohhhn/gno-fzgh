@@ -5,9 +5,9 @@ import (
 	"std"
 	"strconv"
 
+	whitelist "<your_whitelist_package_path>" // Change to your deployed whitelist package path
 	"gno.land/p/demo/avl"
 	"gno.land/p/demo/ufmt"
-	whitelist "gno.land/p/leon/test/test/whitelist" // Change to your deployed whitelist package path
 )
 
 // State variables
