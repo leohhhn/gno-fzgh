@@ -310,10 +310,10 @@ func TestWhitelist_Setup(t *testing.T) {
 		maxUsers = 100
 	)
 
-    // generate mock address
-	alice := testutils.TestAddress("alice")
-
-    // use mock address to execute test transaction
+	// generate mock address
+	alice := testutils.TestAddress("alice") 
+	
+	// use mock address to execute test transaction
 	std.TestSetOrigCaller(alice)
 
 	w := NewWhitelist(name, int(deadline), maxUsers, alice)
