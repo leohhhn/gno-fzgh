@@ -196,7 +196,7 @@ touch whitelist.gno
 In `whitelist.gno`, we will place our `Whitelist` struct
 and all of its functionality:
 
-```
+```go
 package whitelist
 
 import (
@@ -220,7 +220,7 @@ provided in Gno.
 
 Next, we can write functions that we will need to act upon this struct:
 
-```
+```go
 // Create a new Whitelist instance from arguments
 func NewWhitelist(name string, deadline int, maxUsers int, owner std.Address) *Whitelist {
 	return &Whitelist{
@@ -293,7 +293,7 @@ found on-chain - in the Gno.land's file system. The GnoVM resolves
 the path to the `testutils` package and imports the needed tools from on-chain
 storage. You will see this pattern further down this tutorial as well.
 
-```
+```go
 package whitelist
 
 import (
@@ -358,7 +358,7 @@ touch whitelistFactory.gno
 In the file, we can start writing our realm. Since the realm will also
 handle whitelist creation, we are calling it `whitelistfactory`:
 
-```
+```go
 package whitelistfactory
 
 import (
@@ -396,7 +396,7 @@ store all of our Whitelist instances.
 
 Moving on:
 
-```
+```go
 func NewWhitelist(name string, deadline int, maxUsers int) string {
 	// Check if deadline is in the past
 	if deadline <= int(std.GetHeight()) {
@@ -442,7 +442,7 @@ To sign up for a whitelist, four conditions must be met:
 If all conditions are met, we will update the whitelist instance
 in the AVL tree to its new state.
 
-```
+```go
 func SignUpToWhitelist(whitelistID int) string {
 	// Get ID and convert to string
 	id := strconv.Itoa(whitelistID)
@@ -491,7 +491,7 @@ Finally, we will write a `Render` function to display the state
 of our realm. The Render function will display all whitelists that
 currently exist in the state of the realm, along with their details.
 
-```
+```go
 func Render(path string) string {
 	if path == "" {
 		return renderHomepage()
@@ -507,7 +507,7 @@ will write a helper render function to handle the main logic.
 We will generate valid markdown text based on the state of the realm into
 a `Buffer`, which we will finally convert into a string that will be displayed later.
 
-```
+```go
 func renderHomepage() string {
 	// Define empty buffer
 	var b bytes.Buffer
