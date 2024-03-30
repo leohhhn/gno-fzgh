@@ -88,33 +88,23 @@ To interact with the `Gno.Land` blockchain, we must generate a keypair.
 This is done using the
 [`gnokey`](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey) CLI tool.
 
-To generate a new keypair and add it to local storage, run:
+In order to avoid having to use a faucet, we will generate a keypair which already
+has a premined balance. To do this, run the following command: 
 
 ```
-gnokey add {your keypair name}
+gnokey add Dev --recover
 ```
 
-Next, `gnokey` will ask you for a password to encrypt your keypair and save
-it under `{your keypair name}`.
-This will generate a keypair based on a random BIP39 mnemonic phrase, which
-will be displayed shortly. Write this phrase down if you plan to use this
-keypair in the long run.
-
-To see currently saved keypairs, run:
-
+`gnokey` will ask you for a password to encrypt the keypair and save
+it under the name `Dev`. After confirming the password, `gnokey` will ask 
+you for a BIP39 mnemonic phrase. Input the following:
 ```
-gnokey list
+source bonus chronic canvas draft south burst lottery vacant surface solve popular case indicate oppose farm nothing bullet exhibit title speed wink action roast
 ```
 
-Here is a sample keypair named Dev:
+This will generate a keypair which will be displayed after successful execution.
 
-```
-$ gnokey list
-
-0. Dev (local) - addr: g10rdr9mhc7xzlyqt9fu3nhl95jy8hmfdyws8yds pub: gpub1pgfj7ard9eg82cjtv4u4xetrwqer2dntxyfzxz3pq028mgdjsyjx6uzfcu7zu2nlmsn2yvqk458xh9trddjkta338xcqq94dfrt, path: <nil>
-```
-
-We will use the this address later.
+You can also see currently saved keypairs by running `gnokey list`.
 
 Other than generating keypairs, `gnokey` is used to interact with the
 Gno.Land blockchain via the CLI. `gnokey` can fetch information about
@@ -586,48 +576,18 @@ func renderHomepage() string {
 That completes our realm code, and we can go onto deploying it along with
 the `whitelist` package from before.
 
-## Using Gnofaucet & Gnoweb to get test tokens
+## Using Gnoweb to view on-chain state
 
-For this section of the tutorial, we will use the `gnoweb` and `gnofaucet`
-CLI tools. `gnoweb` allows us to access the aforementioned on-chain file
-system. `gnoweb` will spin up a local front end where we will find the faucet
-for test tokens and all of the currently deployed packages and realms.
+For this section of the tutorial, we will use the `gnoweb` CLI tool - 
+it will allow us to access the aforementioned on-chain file
+system. `gnoweb` will spin up a local front end where we will find all the
+currently deployed packages and realms.
 
-### Setting up Gnofaucet
-
-To use the faucet locally, we have to set it up beforehand. This mainly
-includes setting a funding address for the faucet.
-
-To do this, we need to import a keypair with a pre-mined balance to `gnokey`.
-In the `gno.land` subfolder, run the following:
-
-```
-gnokey add --recover Faucet
-```
-
-`Gnokey` will ask you to provide a mnemonic for the keypair. The following
-mnemonic, which has a pre-mined balance as per `genesis_balances.txt`, found
-within `gno.land/genesis`, is the phrase for the address called `test1`.
-
-```
-source bonus chronic canvas draft south burst lottery vacant surface solve popular case indicate oppose farm nothing bullet exhibit title speed wink action roast
-```
-
-We first need to spin up our local node to start the faucet. We will also
+Before using `gnoweb`, we first need to spin up our local node. We will also
 need this node to be running to see other tools in action, as well as deploy
-Realms to the local testnet. Start the node with `gnoland start`.
+GNo code to the local testnet. Start the node with `gnoland start`.
 
 If the node has started successfully, you should see blocks being produced.
-
-Then, start the faucet, serving the `dev` chain with the `Faucet` keypair:
-
-```
-gnofaucet serve --chain-id dev Faucet
-```
-
-> Note: A common error when running the faucet can happen in case the `--home`
-path for `gnokey` and `gnofaucet` differ. See
-[this issue](https://github.com/leohhhn/gnoland_zero_to_hero/issues/1) for clarification.
 
 ### Running Gnoweb
 
@@ -637,22 +597,15 @@ front end will start on `127.0.0.1:8888`.
 `gnoweb` also provides us with a simple interface to send local testnet
 tokens to the address that we generated in the previous steps.
 
-By navigating to `127.0.0.1:8888/faucet`, you will be able to input
-an address to send tokens to.
-
-By default, the faucet sends `1000000ugnot` to the provided address,
-equal to `1 GNOT` token. We will use the previously generated `Dev`
-keypair to receive tokens and deploy our code.
-
 To check the balance of your address, you can use the
 [query](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey#make-an-abci-query)
 functionality of `gnokey` to make an ABCI query to the node.
 
 ```
-$ gnokey query bank/balances/g10rdr9mhc7xzlyqt9fu3nhl95jy8hmfdyws8yds
+$ gnokey query bank/balances/g1jg8mtutu9khhfwc4nxmuhcpftf0pajdhfvsqf5
 
 height: 0
-data: "1000000ugnot"
+data: "10000000000000ugnot"
 ```
 
 ## Deployment to a local testnet
