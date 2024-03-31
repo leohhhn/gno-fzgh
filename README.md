@@ -1,38 +1,38 @@
-# From Zero to Gno.Land Hero
+# From Zero to Gno.land Hero
 
 ![RealmCode](src/banner.png)
 
-In this tutorial, we will enter the world of **Gno.Land**, and build our own
+In this tutorial, we will enter the world of **Gno.land**, and build our own
 smart contract using the **Gno** programming language. Gno is an interpreted
 version of Golang that shares 99% of the functionality with Go, allowing us
 to write blockchain-specific code in a secure, battle-tested language that many
 developers already have in their skillset.
 
-We will go over what Gno.Land is, and how you can use the full potential of Gno
+We will go over what Gno.land is, and how you can use the full potential of Gno
 to build secure blockchain applications in a familiar blockchain language.
 
-## Why Gno.Land?
+## Why Gno.land?
 
-Gno.Land is a layer 1 blockchain network based on Tendermint2 technology.
+Gno.land is a layer 1 blockchain network based on Tendermint2 technology.
 It aims to offesecurity, scalability, and high-quality smart contract
 libraries to developers while also being interconnected with existing Cosmos
-chains via IBC1. Gno.Land comes with GnoVM, a VM which allows us to
-run interpreted Gno code. Currently, Gno.Land has a development testnet out,
+chains via IBC1. Gno.land comes with GnoVM, a VM which allows us to
+run interpreted Gno code. Currently, Gno.land has a development testnet out,
 with the mainnet release expected in 2024. You can read more about
-Gno.Land [here](https://gno.land/).
+Gno.land [here](https://gno.land/).
 
 ## Tutorial overview
 
 > _Note: Familiarity with Golang, although not a strict necessity,
 is recommended to follow this tutorial._
 
-This tutorial will review the tools and procedures required to develop in Gno.Land. These are:
+This tutorial will review the tools and procedures required to develop in Gno.land. These are:
 
 1. Environment setup
-2. Generating a Gno.Land keypair with `Gnokey`
+2. Generating a Gno.land keypair with `Gnokey`
 3. Writing & testing a smart contract in `Gno`
 4. Hands-on coding
-5. Using `Gnofaucet` & `Gnoweb` to get test tokens
+5. Using `Gnoweb` to browse on-chain state
 6. Deploying our code to a local testnet
 7. Deploying code to a remote testnet using the Gno Playground
 
@@ -70,61 +70,44 @@ cd gno.land
 make build && make install
 ```
 
-3. `gnodev` - a tool to help you develop Gno apps faster
-```
-make install.gnodev
-```
-
-> The `install.gnodev` command can be found in the root Makefile.
-
 This completes the environment setup.
 
-To follow this tutorial, having the most up-to-date docs open is
-recommended. You can view the official documentation [here](https://docs.gno.land/).
+To follow this tutorial, having the Official Documentation handy is recommended. 
+You can view the official documentation [here](https://docs.gno.land/).
 
-## Generating a Gno.Land keypair with Gnokey
+## Generating a Gno.land keypair with Gnokey
 
-To interact with the `Gno.Land` blockchain, we must generate a keypair.
+To interact with the `Gno.land` blockchain, we must generate a keypair.
 This is done using the
 [`gnokey`](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey) CLI tool.
 
-To generate a new keypair and add it to local storage, run:
+In order to avoid having to use a faucet, we will generate a keypair which already
+has a premined balance. To do this, run the following command: 
 
 ```
-gnokey add {your keypair name}
+gnokey add Dev --recover
 ```
 
-Next, `gnokey` will ask you for a password to encrypt your keypair and save
-it under `{your keypair name}`.
-This will generate a keypair based on a random BIP39 mnemonic phrase, which
-will be displayed shortly. Write this phrase down if you plan to use this
-keypair in the long run.
-
-To see currently saved keypairs, run:
-
+`gnokey` will ask you for a password to encrypt the keypair and save
+it under the name `Dev`. After confirming the password, `gnokey` will ask 
+you for a BIP39 mnemonic phrase. Input the following:
 ```
-gnokey list
+source bonus chronic canvas draft south burst lottery vacant surface solve popular case indicate oppose farm nothing bullet exhibit title speed wink action roast
 ```
 
-Here is a sample keypair named Dev:
+This will generate a keypair which will be displayed after successful execution.
 
-```
-$ gnokey list
-
-0. Dev (local) - addr: g10rdr9mhc7xzlyqt9fu3nhl95jy8hmfdyws8yds pub: gpub1pgfj7ard9eg82cjtv4u4xetrwqer2dntxyfzxz3pq028mgdjsyjx6uzfcu7zu2nlmsn2yvqk458xh9trddjkta338xcqq94dfrt, path: <nil>
-```
-
-We will use the this address later.
+You can also see currently saved keypairs by running `gnokey list`.
 
 Other than generating keypairs, `gnokey` is used to interact with the
-Gno.Land blockchain via the CLI. `gnokey` can fetch information about
+Gno.land blockchain via the CLI. `gnokey` can fetch information about
 an address, call functions on smart contracts and send state changes
 (transactions) to the network. This will be covered later.
 
 ## Writing & testing in Gno
 
-In Gno.Land, smart contracts are called [Realms](https://docs.onbloc.xyz/introduction-to-gnoland/what-is-gnoland/concepts#realm). Here are three
-Gno.Land concepts we need to cover before diving into the actual
+In Gno.land, smart contracts are called [Realms](https://docs.gno.land/concepts/realms). Here are three
+Gno.land concepts we need to cover before diving into the actual
 development of Realms:
 
 1. Packages vs. Realms
@@ -133,7 +116,7 @@ development of Realms:
 
 ### Packages vs. Realms
 
-Gno.Land code can be divided into two main groups: packages & realms.
+Gno.land code can be divided into two main groups: packages & realms.
 Put simply, packages represent stateless code intended to be reused -
 libraries. Realms, on the other hand, represent smart contracts that
 can hold arbitrary state and functionality. Both packages and realms
@@ -149,13 +132,16 @@ be displayed in an arbitrary UI.
 
 ### Paths
 
-Gno.Land saves its packages and realms in a tree-like structure - similar
-to a classic file system. You can find added packages under the `"gno.land/p/"`
-path. When developing a realm in Gno, you can access and import these packages
+Gno.land saves its packages and realms in a tree-like structure - similar
+to a classic file system. You can find packages under the `"gno.land/p/"`
+path, while you can find realms under the `"gno.land/r/"` path. 
+When developing an app in Gno, you can access and import packages
 through their deployed paths.
 
-A developer must provide a path to place their realm upon deployment. This
-provides a quick and easy way to access the state of Realms.
+A developer must provide a path upon deployment of packages and realms. Developers
+may choose a namespace to deploy their code under. Specifically, packages must be
+deployed under `"gno.land/p/demo/<package_name>"`, while realms can be deployed
+under `"gno.land/r/<your_username>/<realm_name>"`.
 
 Let's get started with the code. We will build an app allowing users to sign
 up for whitelists before a specific deadline.
@@ -175,28 +161,30 @@ If you're using VSCode to edit your files, you can install the
 
 ### Whitelist package
 
-From the repo root folder, go into `examples`, and create a new directory,
-`whitelist`, in which we will place our code. Within that directory, create
-two directories that will separate the packages from the realms we write:
+To start, create a new separate folder which will store your Gno code. In this folder,
+create two subfolders, `p/` and `r/`
 
-```
-cd examples
-mkdir whitelist && cd whitelist
+```shell
 mkdir p && mkdir r
-cd p
 ```
 
-Going into the `/p/` directory we just made, we can create a file called
-`whitelist.gno` where we will write our package.
+In `p/`, initialize a `gno.mod` file, used to keep track of the package path and 
+dependencies:
 
+```shell
+## Our whitelist package will live under the `p/demo/` namespace
+gno mod init gno.land/p/demo/whitelist
 ```
+
+Now, you can create the file which will store your Gno code:
+
+```shell
 touch whitelist.gno
 ```
 
-In `whitelist.gno`, we will place our `Whitelist` struct
-and all of its functionality:
+In `whitelist.gno`, we will place our `Whitelist` struct and all of its functionality:
 
-```
+```go
 package whitelist
 
 import (
@@ -220,7 +208,7 @@ provided in Gno.
 
 Next, we can write functions that we will need to act upon this struct:
 
-```
+```go
 // Create a new Whitelist instance from arguments
 func NewWhitelist(name string, deadline int, maxUsers int, owner std.Address) *Whitelist {
 	return &Whitelist{
@@ -293,7 +281,7 @@ found on-chain - in the Gno.land's file system. The GnoVM resolves
 the path to the `testutils` package and imports the needed tools from on-chain
 storage. You will see this pattern further down this tutorial as well.
 
-```
+```go
 package whitelist
 
 import (
@@ -310,10 +298,10 @@ func TestWhitelist_Setup(t *testing.T) {
 		maxUsers = 100
 	)
 
-    // generate mock address
-	alice := testutils.TestAddress("alice")
-
-    // use mock address to execute test transaction
+	// generate mock address
+	alice := testutils.TestAddress("alice") 
+	
+	// use mock address to execute test transaction
 	std.TestSetOrigCaller(alice)
 
 	w := NewWhitelist(name, int(deadline), maxUsers, alice)
@@ -343,22 +331,30 @@ command from the same directory:
 gno test . -v
 ```
 
+Finally, to make sure all dependencies are correctly imported, run `gno mod tidy`.
+This will add the `testutils` package as a dependency in `gno.mod`.
+
 ### WhitelistFactory Realm
 
 This is where the bulk of our functionality will be. The main thing
 differentiating packages from realms is that realms hold state and have
-an initializer function. In our `r/` directory, create a new file, `whitelistFactory.gno`:
+an initializer function. In our `r/` directory, just like before, initialize 
+a `gno.mod` file with the following command:
+
+```shell
+gno mod init gno.land/r/<YOUR_USERNAME>/whitelistfactory
+```
+
+Then, create a new file, `whitelistfactory.gno`:
 
 ```
-cd ..
-cd r
-touch whitelistFactory.gno
+touch whitelistfactory.gno
 ```
 
 In the file, we can start writing our realm. Since the realm will also
 handle whitelist creation, we are calling it `whitelistfactory`:
 
-```
+```go
 package whitelistfactory
 
 import (
@@ -368,7 +364,7 @@ import (
 
 	"gno.land/p/demo/avl"
 	"gno.land/p/demo/ufmt"
-	whitelist "<your_whitelist_package_path>" // Change to your deployed whitelist package path
+	whitelist "<your_whitelist_package_path>" // *Import your whitelist package
 )
 
 // State variables
@@ -381,11 +377,12 @@ func init() {
 	whitelistTree = avl.NewTree()
 }
 ```
+> *The import path for your whitelist is what you defined in the `gno.mod` file.
 
 Here, we have two particular Gno-specific things: the AVL Tree and
 the `init()` function.
 
-Since all actions on the Gno.Land blockchain must be deterministic,
+Since all actions on the Gno.land blockchain must be deterministic,
 we are unable to use the native Go `map` functionality to store our data.
 This is why we are using custom-built [AVL trees](https://docs.gno.land/concepts/packages#avl), which expose a
 classic `get/set` API to the developer.
@@ -396,7 +393,7 @@ store all of our Whitelist instances.
 
 Moving on:
 
-```
+```go
 func NewWhitelist(name string, deadline int, maxUsers int) string {
 	// Check if deadline is in the past
 	if deadline <= int(std.GetHeight()) {
@@ -418,7 +415,7 @@ func NewWhitelist(name string, deadline int, maxUsers int) string {
 
 	// Update AVL tree with new state
 	whitelistTree.Set(id, w)
-	return id
+	return "Created new whitelist with id #" + id
 }
 ```
 
@@ -442,7 +439,7 @@ To sign up for a whitelist, four conditions must be met:
 If all conditions are met, we will update the whitelist instance
 in the AVL tree to its new state.
 
-```
+```go
 func SignUpToWhitelist(whitelistID int) string {
 	// Get ID and convert to string
 	id := strconv.Itoa(whitelistID)
@@ -483,7 +480,7 @@ func SignUpToWhitelist(whitelistID int) string {
 
 	// Update the AVL tree with new state
 	whitelistTree.Set(id, w)
-	return "successfully signed up to " + id
+	return "successfully signed up to " + w.GetWhitelistName() + "!"
 }
 ```
 
@@ -491,7 +488,7 @@ Finally, we will write a `Render` function to display the state
 of our realm. The Render function will display all whitelists that
 currently exist in the state of the realm, along with their details.
 
-```
+```go
 func Render(path string) string {
 	if path == "" {
 		return renderHomepage()
@@ -507,7 +504,7 @@ will write a helper render function to handle the main logic.
 We will generate valid markdown text based on the state of the realm into
 a `Buffer`, which we will finally convert into a string that will be displayed later.
 
-```
+```go
 func renderHomepage() string {
 	// Define empty buffer
 	var b bytes.Buffer
@@ -586,73 +583,33 @@ func renderHomepage() string {
 That completes our realm code, and we can go onto deploying it along with
 the `whitelist` package from before.
 
-## Using Gnofaucet & Gnoweb to get test tokens
+## Using Gnoweb to view on-chain state
 
-For this section of the tutorial, we will use the `gnoweb` and `gnofaucet`
-CLI tools. `gnoweb` allows us to access the aforementioned on-chain file
-system. `gnoweb` will spin up a local front end where we will find the faucet
-for test tokens and all of the currently deployed packages and realms.
+For this section of the tutorial, we will use the `gnoweb` CLI tool - 
+it will allow us to access the aforementioned on-chain file
+system. `gnoweb` will spin up a local front end where we will find all the
+currently deployed packages and realms.
 
-### Setting up Gnofaucet
-
-To use the faucet locally, we have to set it up beforehand. This mainly
-includes setting a funding address for the faucet.
-
-To do this, we need to import a keypair with a pre-mined balance to `gnokey`.
-In the `gno.land` subfolder, run the following:
-
-```
-gnokey add --recover Faucet
-```
-
-`Gnokey` will ask you to provide a mnemonic for the keypair. The following
-mnemonic, which has a pre-mined balance as per `genesis_balances.txt`, found
-within `gno.land/genesis`, is the phrase for the address called `test1`.
-
-```
-source bonus chronic canvas draft south burst lottery vacant surface solve popular case indicate oppose farm nothing bullet exhibit title speed wink action roast
-```
-
-We first need to spin up our local node to start the faucet. We will also
+Before using `gnoweb`, we first need to spin up our local node. We will also
 need this node to be running to see other tools in action, as well as deploy
-Realms to the local testnet. Start the node with `gnoland start`.
+Gno code to the local testnet. Start the node with `gnoland start`.
 
 If the node has started successfully, you should see blocks being produced.
 
-Then, start the faucet, serving the `dev` chain with the `Faucet` keypair:
-
-```
-gnofaucet serve --chain-id dev Faucet
-```
-
-> Note: A common error when running the faucet can happen in case the `--home`
-path for `gnokey` and `gnofaucet` differ. See
-[this issue](https://github.com/leohhhn/gnoland_zero_to_hero/issues/1) for clarification.
-
-### Running Gnoweb
-
-Run the `gnoweb` command from within the `gno.land` subfolder. A local
+Then, run the `gnoweb` command from within the `gno.land` subfolder. A local
 front end will start on `127.0.0.1:8888`.
 
-`gnoweb` also provides us with a simple interface to send local testnet
-tokens to the address that we generated in the previous steps.
+### Check address balance
 
-By navigating to `127.0.0.1:8888/faucet`, you will be able to input
-an address to send tokens to.
-
-By default, the faucet sends `1000000ugnot` to the provided address,
-equal to `1 GNOT` token. We will use the previously generated `Dev`
-keypair to receive tokens and deploy our code.
-
-To check the balance of your address, you can use the
-[query](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey#make-an-abci-query)
-functionality of `gnokey` to make an ABCI query to the node.
-
+To deploy Gno code to the chain, we need testnet GNOTs. In a previous step,
+we have generated a keypair that has a premined balance. Let's check the balance
+of our address with the [gnokey query](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey#make-an-abci-query) 
+command: 
 ```
-$ gnokey query bank/balances/g10rdr9mhc7xzlyqt9fu3nhl95jy8hmfdyws8yds
+$ gnokey query bank/balances/g1jg8mtutu9khhfwc4nxmuhcpftf0pajdhfvsqf5
 
 height: 0
-data: "1000000ugnot"
+data: "10000000000000ugnot"
 ```
 
 ## Deployment to a local testnet
@@ -663,8 +620,8 @@ following command:
 
 ```
 gnokey maketx addpkg \
---pkgpath "gno.land/p/demo/whitelist" \
---pkgdir "./examples/whitelist/p" \
+--pkgpath "<whitelist_path_from_gno.mod>" \
+--pkgdir "./p" \
 --gas-fee 10000000ugnot \
 --gas-wanted 800000 \
 --broadcast \
@@ -673,7 +630,7 @@ gnokey maketx addpkg \
 Dev
 ```
 
-As mentioned earlier, `gnokey` is used to interact with Gno.Land. Let's analyze
+As mentioned earlier, `gnokey` is used to interact with Gno.land. Let's analyze
 the subcommands and flags in detail:
 
 1. `maketx` - signs and broadcasts a transaction
@@ -697,14 +654,16 @@ GAS USED:   775097
 ```
 
 Now our package can be seen on-chain. We can take a look at the code with
-`gnoweb`, by visiting the path we uploaded it to: `127.0.0.1:8888/p/demo/whitelist`.
+`gnoweb`, by visiting the path we uploaded it to:
+`127.0.0.1:8888/p/<username>/whitelist`.
 
-Let's deploy our realm now:
+With the whitelist package deployed, you can properly import it into your realm
+and continue with deployment:
 
 ```
 gnokey maketx addpkg \
---pkgpath "gno.land/r/demo/whitelist" \
---pkgdir "./examples/whitelist/r" \
+--pkgpath "<whitelistfactory_path_from_gno.mod>" \
+--pkgdir "./r" \
 --gas-fee 10000000ugnot \
 --gas-wanted 800000 \
 --broadcast \
@@ -715,9 +674,10 @@ Dev
 
 Congrats!
 
-If all went well, you've just written and uploaded your first Gno.Land
+If all went well, you've just written and uploaded your first Gno.land
 package and realm. You can visit the realm path to see the `Render`
-function in action: `127.0.0.1:8888/r/demo/whitelist`. It should look something like this:
+function in action: `127.0.0.1:8888/r/<YOUR_USERNAME>/whitelistfactory`. 
+It should look something like this:
 
 ![Default view](src/defaultview.png)
 
@@ -784,7 +744,8 @@ gnoland start
 ## Deploying to a remote testnet
 
 In this section, you will learn how to deploy the whitelist package and realm
-to the Gno.land test3 testnet through Gno.land's online editor, Gno Playground.
+to the Gno.land Portal Loop testnet through Gno.land's online editor,
+Gno Playground.
 
 To follow along, you will need to install a Gno.land web browser wallet, such as
 [Adena](https://www.adena.app/), and create a keypair. This will allow you to
@@ -812,7 +773,6 @@ you will see the following:
 
 ![TestDeploy](src/deploy.png)
 
-Change the deployment path as you see fit - for example,`gno.land/p/<your_name>/whitelist`.
 Keep in mind that this is the path you will use to later import the package 
 and use it for the `WhitelistFactory` realm.
 
@@ -824,7 +784,7 @@ testnet GNOTs, the deployment should result in a success.
 After successfully deploying the package, we can continue with the realm code.
 
 Delete the old files, and create a new one - `whitelistfactory.gno`.
-Paste in the code, or simply find it on [this link](https://play.gno.land/p/Qz9_5M03XRd).
+Paste in the code, or simply find it on [this link](https://play.gno.land/p/EVoY_4N1AGA).
 
 ![RealmCode](src/realm_code.png)
 
@@ -833,6 +793,6 @@ When the realm has been deployed to the Portal loop testnet, you will be able
 to look it up simply by inputting the realm path in your browser. 
 
 This concludes our tutorial. Once again, congratulations on writing
-your first realm in Gno. You've become a real Gno.Land hero!
+your first realm in Gno. You've become a real Gno.land hero!
 
-> Written _August 10th 2023_, last updated _March 30th 2024_
+> Written _August 10th 2023_, last updated _March 31th 2024_
