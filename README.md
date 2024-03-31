@@ -79,8 +79,8 @@ make install.gnodev
 
 This completes the environment setup.
 
-To follow this tutorial, having the most up-to-date docs open is
-recommended. You can view the official documentation [here](https://docs.gno.land/).
+To follow this tutorial, having the Official Documentation handy is recommended. 
+You can view the official documentation [here](https://docs.gno.land/).
 
 ## Generating a Gno.land keypair with Gnokey
 
@@ -113,7 +113,7 @@ an address, call functions on smart contracts and send state changes
 
 ## Writing & testing in Gno
 
-In Gno.land, smart contracts are called [Realms](https://docs.onbloc.xyz/introduction-to-gnoland/what-is-gnoland/concepts#realm). Here are three
+In Gno.land, smart contracts are called [Realms](https://docs.gno.land/concepts/realms). Here are three
 Gno.land concepts we need to cover before diving into the actual
 development of Realms:
 
@@ -346,7 +346,7 @@ This will add the `testutils` package as a dependency in `gno.mod`.
 This is where the bulk of our functionality will be. The main thing
 differentiating packages from realms is that realms hold state and have
 an initializer function. In our `r/` directory, just like before, initialize 
-a gno.mod file with the following command:
+a `gno.mod` file with the following command:
 
 ```shell
 gno mod init gno.land/r/<YOUR_USERNAME>/whitelistfactory
@@ -371,7 +371,7 @@ import (
 
 	"gno.land/p/demo/avl"
 	"gno.land/p/demo/ufmt"
-	whitelist "<your_whitelist_package_path>" // Change to your deployed whitelist package path
+	whitelist "<your_whitelist_package_path>" // Import your whitelist package
 )
 
 // State variables
