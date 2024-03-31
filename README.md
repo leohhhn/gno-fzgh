@@ -802,4 +802,4 @@ to look it up simply by inputting the realm path in your browser.
 This concludes our tutorial. Once again, congratulations on writing
 your first realm in Gno. You've become a real Gno.land hero!
 
-> Written _August 10th 2023_, last updated _March 30th 2024_
+> Written _August 10th 2023_, last updated _March 31th 2024_
