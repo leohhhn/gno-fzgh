@@ -146,8 +146,9 @@ When developing an app in Gno, you can access and import packages
 through their deployed paths.
 
 A developer must provide a path upon deployment of packages and realms. Developers
-may choose a namespace to deploy their code under, such as `"gno.land/p/<username>"`,
-and `"gno.land/r/<username>"`.
+may choose a namespace to deploy their code under. Specifically, packages must be
+deployed under `"gno.land/p/demo/<package_name>"`, while realms can be deployed
+under `"gno.land/r/<your_username>/<realm_name>"`.
 
 Let's get started with the code. We will build an app allowing users to sign
 up for whitelists before a specific deadline.
@@ -174,13 +175,11 @@ create two subfolders, `p/` and `r/`
 mkdir p && mkdir r
 ```
 
-
 In `p/`, initialize a `gno.mod` file, used to keep track of the package path and 
 dependencies:
 
 ```shell
-## Be sure to change the path to match your desired namespace
-gno mod init gno.land/p/<YOUR_USERNAME>/whitelist
+gno mod init gno.land/p/demo/whitelist
 ```
 
 Now, you can create the file which will store your Gno code:
@@ -669,7 +668,7 @@ and continue with deployment:
 
 ```
 gnokey maketx addpkg \
---pkgpath "gno.land/r/<whitelistfactory_path_from_gno>/whitelistfactory" \
+--pkgpath "<whitelistfactory_path_from_gno.mod>" \
 --pkgdir "./r" \
 --gas-fee 10000000ugnot \
 --gas-wanted 800000 \
@@ -683,7 +682,8 @@ Congrats!
 
 If all went well, you've just written and uploaded your first Gno.land
 package and realm. You can visit the realm path to see the `Render`
-function in action: `127.0.0.1:8888/r/demo/whitelist`. It should look something like this:
+function in action: `127.0.0.1:8888/r/<YOUR_USERNAME>/whitelistfactory`. 
+It should look something like this:
 
 ![Default view](src/defaultview.png)
 
