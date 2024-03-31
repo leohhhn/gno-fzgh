@@ -790,7 +790,7 @@ testnet GNOTs, the deployment should result in a success.
 After successfully deploying the package, we can continue with the realm code.
 
 Delete the old files, and create a new one - `whitelistfactory.gno`.
-Paste in the code, or simply find it on [this link](https://play.gno.land/p/Qz9_5M03XRd).
+Paste in the code, or simply find it on [this link](https://play.gno.land/p/EVoY_4N1AGA).
 
 ![RealmCode](src/realm_code.png)
 
