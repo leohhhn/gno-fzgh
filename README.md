@@ -421,7 +421,7 @@ func NewWhitelist(name string, deadline int, maxUsers int) string {
 
 	// Update AVL tree with new state
 	whitelistTree.Set(id, w)
-	return id
+	return "Created new whitelist with id #" + id
 }
 ```
 
@@ -486,7 +486,7 @@ func SignUpToWhitelist(whitelistID int) string {
 
 	// Update the AVL tree with new state
 	whitelistTree.Set(id, w)
-	return "successfully signed up to " + id
+	return "successfully signed up to " + w.GetWhitelistName() + "!"
 }
 ```
 
@@ -750,7 +750,8 @@ gnoland start
 ## Deploying to a remote testnet
 
 In this section, you will learn how to deploy the whitelist package and realm
-to the Gno.land test3 testnet through Gno.land's online editor, Gno Playground.
+to the Gno.land Portal Loop testnet through Gno.land's online editor,
+Gno Playground.
 
 To follow along, you will need to install a Gno.land web browser wallet, such as
 [Adena](https://www.adena.app/), and create a keypair. This will allow you to
@@ -778,7 +779,6 @@ you will see the following:
 
 ![TestDeploy](src/deploy.png)
 
-Change the deployment path as you see fit - for example,`gno.land/p/<your_name>/whitelist`.
 Keep in mind that this is the path you will use to later import the package 
 and use it for the `WhitelistFactory` realm.
 
