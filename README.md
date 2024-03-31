@@ -70,13 +70,6 @@ cd gno.land
 make build && make install
 ```
 
-3. `gnodev` - a tool to help you develop Gno apps faster
-```
-make install.gnodev
-```
-
-> The `install.gnodev` command can be found in the root Makefile.
-
 This completes the environment setup.
 
 To follow this tutorial, having the Official Documentation handy is recommended. 
