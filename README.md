@@ -179,6 +179,7 @@ In `p/`, initialize a `gno.mod` file, used to keep track of the package path and
 dependencies:
 
 ```shell
+## Our whitelist package will live under the `p/demo/` namespace
 gno mod init gno.land/p/demo/whitelist
 ```
 
