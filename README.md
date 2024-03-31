@@ -371,7 +371,7 @@ import (
 
 	"gno.land/p/demo/avl"
 	"gno.land/p/demo/ufmt"
-	whitelist "<your_whitelist_package_path>" // Import your whitelist package
+	whitelist "<your_whitelist_package_path>" // *Import your whitelist package
 )
 
 // State variables
@@ -384,6 +384,7 @@ func init() {
 	whitelistTree = avl.NewTree()
 }
 ```
+> *The import path for your whitelist is what you defined in the `gno.mod` file.
 
 Here, we have two particular Gno-specific things: the AVL Tree and
 the `init()` function.
@@ -598,22 +599,19 @@ currently deployed packages and realms.
 
 Before using `gnoweb`, we first need to spin up our local node. We will also
 need this node to be running to see other tools in action, as well as deploy
-GNo code to the local testnet. Start the node with `gnoland start`.
+Gno code to the local testnet. Start the node with `gnoland start`.
 
 If the node has started successfully, you should see blocks being produced.
 
-### Running Gnoweb
-
-Run the `gnoweb` command from within the `gno.land` subfolder. A local
+Then, run the `gnoweb` command from within the `gno.land` subfolder. A local
 front end will start on `127.0.0.1:8888`.
 
-`gnoweb` also provides us with a simple interface to send local testnet
-tokens to the address that we generated in the previous steps.
+### Check address balance
 
-To check the balance of your address, you can use the
-[query](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey#make-an-abci-query)
-functionality of `gnokey` to make an ABCI query to the node.
-
+To deploy Gno code to the chain, we need testnet GNOTs. In a previous step,
+we have generated a keypair that has a premined balance. Let's check the balance
+of our address with the [gnokey query](https://docs.gno.land/gno-tooling/cli/gno-tooling-gnokey#make-an-abci-query) 
+command: 
 ```
 $ gnokey query bank/balances/g1jg8mtutu9khhfwc4nxmuhcpftf0pajdhfvsqf5
 
@@ -629,8 +627,8 @@ following command:
 
 ```
 gnokey maketx addpkg \
---pkgpath "gno.land/p/demo/whitelist" \
---pkgdir "./examples/whitelist/p" \
+--pkgpath "<whitelist_path_from_gno.mod>" \
+--pkgdir "./p" \
 --gas-fee 10000000ugnot \
 --gas-wanted 800000 \
 --broadcast \
@@ -663,14 +661,16 @@ GAS USED:   775097
 ```
 
 Now our package can be seen on-chain. We can take a look at the code with
-`gnoweb`, by visiting the path we uploaded it to: `127.0.0.1:8888/p/demo/whitelist`.
+`gnoweb`, by visiting the path we uploaded it to:
+`127.0.0.1:8888/p/<username>/whitelist`.
 
-Let's deploy our realm now:
+With the whitelist package deployed, you can properly import it into your realm
+and continue with deployment:
 
 ```
 gnokey maketx addpkg \
---pkgpath "gno.land/r/demo/whitelist" \
---pkgdir "./examples/whitelist/r" \
+--pkgpath "gno.land/r/<whitelistfactory_path_from_gno>/whitelistfactory" \
+--pkgdir "./r" \
 --gas-fee 10000000ugnot \
 --gas-wanted 800000 \
 --broadcast \
