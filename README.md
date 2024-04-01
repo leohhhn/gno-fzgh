@@ -14,7 +14,7 @@ to build secure blockchain applications in a familiar blockchain language.
 ## Why Gno.land?
 
 Gno.land is a layer 1 blockchain network based on Tendermint2 technology.
-It aims to offesecurity, scalability, and high-quality smart contract
+It aims to offer security, scalability, and high-quality smart contract
 libraries to developers while also being interconnected with existing Cosmos
 chains via IBC1. Gno.land comes with GnoVM, a VM which allows us to
 run interpreted Gno code. Currently, Gno.land has a development testnet out,
